@@ -1,7 +1,9 @@
 import java.util.Scanner;
 public class LinearEquationLogic {
     Scanner scan = new Scanner(System.in);
-    public void start(){ }
+    public void start(){
+        getData();
+    }
 
     private void getData(){
         System.out.println("Welcome user!");
@@ -17,6 +19,11 @@ public class LinearEquationLogic {
     }
 
     public static int parse(String num){
+
         return Integer.parseInt(num);
+    }
+    public void mainMenu(){
+        System.out.println("Main Menu");
+
     }
 }
