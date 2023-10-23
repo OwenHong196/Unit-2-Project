@@ -2,28 +2,72 @@ import java.util.Scanner;
 public class LinearEquationLogic {
     Scanner scan = new Scanner(System.in);
     public void start(){
-        getData();
+        boolean end = false;
+        while (!end) {
+            int option = 0;
+            System.out.println("Welcome user!");
+            LinearEquation equation = getData();
+            while (option != 7) {
+                mainMenu();
+                option = options(equation);
+            }
+            scan.nextLine();
+            System.out.println("Would you like to rerun?");
+            String rerun = scan.nextLine();
+            if (rerun.equals("no")) {
+                end = true;
+            }
+        }
+        System.out.println("Goodbye");
     }
 
-    private void getData(){
-        System.out.println("Welcome user!");
-        System.out.println("Enter coordinate 1: ");
+    private LinearEquation getData(){
+        System.out.print("Enter coordinate 1: ");
         String coor1 = scan.nextLine();
         int coor1X = parse(coor1.substring(1,coor1.indexOf(",")));
-        int coor1Y = parse(coor1.substring(coor1.indexOf(",")+1,coor1.length()-1));
-        System.out.println("Enter coordinate 2: ");
+        int coor1Y = parse(coor1.substring(coor1.indexOf(" ")+1,coor1.length()-1));
+        System.out.print("Enter coordinate 2: ");
         String coor2 = scan.nextLine();
         int coor2X = parse(coor2.substring(1,coor2.indexOf(",")));
-        int coor2Y = parse(coor2.substring(coor2.indexOf(",")+1,coor2.length()-1));
+        int coor2Y = parse(coor2.substring(coor2.indexOf(" ")+1,coor2.length()-1));
         LinearEquation equation = new LinearEquation(coor1X,coor1Y,coor2X,coor2Y);
+        return equation;
     }
 
     public static int parse(String num){
 
         return Integer.parseInt(num);
     }
-    public void mainMenu(){
+    private void mainMenu(){
         System.out.println("Main Menu");
-
+        System.out.println("1. Get slope");
+        System.out.println("2. Get distance");
+        System.out.println("3. Get y-intercept");
+        System.out.println("4. Get equation");
+        System.out.println("5. Get y-coordinate for x");
+        System.out.println("6. Get overall data");
+        System.out.println("7. end");
+    }
+    private int options(LinearEquation equation){
+        System.out.println("Select an option:");
+        int optionNum = scan.nextInt();
+        if (optionNum == 1) {
+            System.out.println("Slope: " + equation.slope());
+        }else if (optionNum == 2) {
+            System.out.println("Distance: " + equation.distance());
+        }else if (optionNum == 3) {
+            System.out.println("Y-intercept: " + equation.yIntercept());
+        }else if (optionNum == 4) {
+            System.out.println("Equation: " + equation.equation());
+        }else if (optionNum == 5) {
+            System.out.println("Enter x coordinate: ");
+            double x = scan.nextInt();
+            System.out.println(equation.coordinateForX(x));
+        }else if (optionNum == 6) {
+            System.out.println(equation.lineInfo());
+        }else{
+            return 7;
+        }
+        return 0;
     }
 }
