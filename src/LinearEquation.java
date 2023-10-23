@@ -18,26 +18,45 @@ public class LinearEquation {
         }
         return "" + roundedToHundredth(((double) y2 - y1) / (x2 - x1));
     }
-    public double yIntercept(){
+    public String yIntercept(){
         if (x1 == x2){
-            return 0;
+            return "undefined";
         }
-        return y1 - roundedToHundredth(((double) y2 - y1) / (x2 - x1)) * x1;
+        return "" + (y1 - roundedToHundredth(((double) y2 - y1) / (x2 - x1)) * x1);
     }
     public String equation(){
-        if (y1 == y2){
-            return "y = " + yIntercept();
+        String equation = "";
+        String slope = (y2 - y1) + "/" + (x2 - x1);
+        String yIntercept = yIntercept();
+        if (x1 == x2) {
+            return ("y = undefined");
+        }else if (y1 == y2) {
+            return "y = " + yIntercept;
         }
-        if (x1 == x2){
-            return ("undefined");
+        if ((y2 - y1) % (x2 - x1) == 0){
+            slope = (y2 - y1) / (x2 - x1) + "";
         }
-        if ((y2 - y1) < 0 || (x2 - x1) < 0){
-            return "y = " + (-1 * (y2 - y1)) + "/" + (-1 * (x2 - x1)) + "x + " + yIntercept();
+        if ((y2 - y1) / (x2 - x1) == 1){
+            slope = "";
         }
-        return "y = " + (y2 - y1) + "/" + (x2 - x1) + "x + " + yIntercept();
+        if ((x2 - x1) < 0){
+            slope = (-1 * (y2 - y1)) + "/" + (-1 * (x2 - x1));
+        }else if ((y2 - y1) < 0) {
+            slope = (y2 - y1) + "/" + (x2 - x1);
+        }
+        equation = "y = " + slope + "x + " + yIntercept;
+        if (Integer.parseInt(yIntercept) < 0){
+            equation = equation.substring(0, equation.indexOf(" +")) + equation.substring(equation.indexOf("+") + 2);
+        }
+        if (yIntercept.equals("0")){
+            equation = equation.substring(0, equation.indexOf(" +"));
+        }
+        return equation;
     }
     public String coordinateForX(double x){
-        double yCoord = roundedToHundredth(roundedToHundredth(((double) y2 - y1) / (x2 - x1)) * x + yIntercept());
+        double yIntercept = Integer.parseInt(yIntercept());
+        double slope = Integer.parseInt(slope());
+        double yCoord = roundedToHundredth(slope) * x + yIntercept;
         return "(" + x + ", " + yCoord + ")";
     }
     public String lineInfo(){
