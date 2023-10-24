@@ -30,8 +30,13 @@ public class LinearEquationLogic {
         String coor2 = scan.nextLine();
         int coor2X = parse(coor2.substring(1,coor2.indexOf(",")));
         int coor2Y = parse(coor2.substring(coor2.indexOf(" ")+1,coor2.length()-1));
-        LinearEquation equation = new LinearEquation(coor1X,coor1Y,coor2X,coor2Y);
-        return equation;
+        if (coor1X == coor2X) {
+            System.out.println("VERITCAL LINE!!!!!!");
+            return null;
+        } else {
+            LinearEquation equation = new LinearEquation(coor1X,coor1Y,coor2X,coor2Y);
+            return equation;
+        }
     }
 
     public static int parse(String num){
