@@ -9,34 +9,28 @@ public class LinearEquation {
     this.x2 = x2;
     this.y2 = y2;
     }
+    public int getX1(){
+        return x1;
+    }
+    public int getX2(){
+        return x2;
+    }
     public double distance(){
         return roundedToHundredth(Math.sqrt(Math.pow((y2 - y1),2) + Math.pow((x2 - x1),2)));
     }
-    public String slope(){
-        if (x1 == x2){
-            return "x= " + x1;
-        }
-        return "" + roundedToHundredth(((double) y2 - y1) / (x2 - x1));
+    public double slope(){
+        return roundedToHundredth(((double) y2 - y1) / (x2 - x1));
     }
-    public String yIntercept(){
-        if (x1 == x2){
-            return "undefined";
-        }
-        return "" + (y1 - roundedToHundredth(((double) y2 - y1) / (x2 - x1)) * x1);
+    public double yIntercept(){
+        return (y1 - roundedToHundredth(((double) y2 - y1) / (x2 - x1)) * x1);
     }
     public String equation(){
-        String equation = "";
         String slope = (y2 - y1) + "/" + (x2 - x1);
-        String yIntercept = yIntercept();
-        if (x1 == x2) {
-            return ("y = undefined");
-        }else if (y1 == y2) {
+        double yIntercept = yIntercept();
+        if (y1 == y2) {
             return "y = " + yIntercept;
         }
-        if ((y2 - y1) % (x2 - x1) == 0){
-            slope = (y2 - y1) / (x2 - x1) + "";
-        }
-        if ((y2 - y1) / (x2 - x1) == 1){
+        if (((double)y2 - y1) / (x2 - x1) == 1){
             slope = "";
         }
         if ((x2 - x1) < 0){
@@ -44,18 +38,21 @@ public class LinearEquation {
         }else if ((y2 - y1) < 0) {
             slope = (y2 - y1) + "/" + (x2 - x1);
         }
-        equation = "y = " + slope + "x + " + yIntercept;
-        if (Integer.parseInt(yIntercept) < 0){
+        if ((y2 - y1) % (x2 - x1) == 0){
+            slope = ((y2 - y1) / (x2 - x1)) + "";
+        }
+        String equation = "y = " + slope + "x + " + yIntercept;
+        if (yIntercept < 0){
             equation = equation.substring(0, equation.indexOf(" +")) + equation.substring(equation.indexOf("+") + 2);
         }
-        if (yIntercept.equals("0")){
+        if (yIntercept == 0){
             equation = equation.substring(0, equation.indexOf(" +"));
         }
         return equation;
     }
     public String coordinateForX(double x){
-        double yIntercept = Integer.parseInt(yIntercept());
-        double slope = Integer.parseInt(slope());
+        double yIntercept = yIntercept();
+        double slope = slope();
         double yCoord = roundedToHundredth(slope) * x + yIntercept;
         return "(" + x + ", " + yCoord + ")";
     }
@@ -64,6 +61,14 @@ public class LinearEquation {
         info += "\nThe equation of the line between these points is: " + equation();
         info += "\nThe slope of this line is: " + slope();
         info += "\nThe y-intercept of this line is: " + yIntercept();
+        info += "\nThe distance between these points is " + distance();
+        return info;
+    }
+    public String lineInfoUndefined(){
+        String info = "The two points are: (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 +")";
+        info += "\nThe equation of the line between these points is: x = " + x1;
+        info += "\nThe slope of this line is: UNDEFINED ";
+        info += "\nThe y-intercept of this line is: Not possible";
         info += "\nThe distance between these points is " + distance();
         return info;
     }

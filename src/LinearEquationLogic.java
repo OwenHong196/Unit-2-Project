@@ -2,20 +2,33 @@ import java.util.Scanner;
 public class LinearEquationLogic {
     Scanner scan = new Scanner(System.in);
     public void start(){
+        System.out.println("Welcome user!");
         boolean end = false;
         while (!end) {
             int option = 0;
-            System.out.println("Welcome user!");
             LinearEquation equation = getData();
-            while (option != 7) {
-                mainMenu();
-                option = options(equation);
-            }
-            scan.nextLine();
-            System.out.println("Would you like to rerun?");
-            String rerun = scan.nextLine();
-            if (rerun.equals("no")) {
-                end = true;
+            if (equation.getX1() == equation.getX2()){
+                while (option != 6) {
+                    mainMenuUndefined();
+                    option = options(equation,true);
+                }
+                scan.nextLine();
+                System.out.print("Would you like to rerun? (yes/no)");
+                String rerun = scan.nextLine();
+                if (rerun.equals("no")) {
+                    end = true;
+                }
+            }else {
+                while (option != 7) {
+                    mainMenu();
+                    option = options(equation);
+                }
+                scan.nextLine();
+                System.out.print("Would you like to rerun? (yes/no)");
+                String rerun = scan.nextLine();
+                if (rerun.equals("no")) {
+                    end = true;
+                }
             }
         }
         System.out.println("Goodbye");
@@ -49,7 +62,7 @@ public class LinearEquationLogic {
         System.out.println("7. end");
     }
     private int options(LinearEquation equation){
-        System.out.println("Select an option:");
+        System.out.print("Select an option: ");
         int optionNum = scan.nextInt();
         if (optionNum == 1) {
             System.out.println("Slope: " + equation.slope());
@@ -60,13 +73,42 @@ public class LinearEquationLogic {
         }else if (optionNum == 4) {
             System.out.println("Equation: " + equation.equation());
         }else if (optionNum == 5) {
-            System.out.println("Enter x coordinate: ");
-            double x = scan.nextInt();
-            System.out.println(equation.coordinateForX(x));
+            System.out.print("Enter x coordinate: ");
+            double x = scan.nextDouble();
+            System.out.println("The point on the like is: " + equation.coordinateForX(x));
         }else if (optionNum == 6) {
             System.out.println(equation.lineInfo());
         }else{
             return 7;
+        }
+        return 0;
+    }
+    private void mainMenuUndefined(){
+        System.out.println("Main Menu");
+        System.out.println("1. Get slope");
+        System.out.println("2. Get distance");
+        System.out.println("3. Get y-intercept");
+        System.out.println("4. Get equation");
+        System.out.println("5. Get overall data");
+        System.out.println("6. end");
+    }
+    private int options(LinearEquation equation, boolean undefined){
+        System.out.println("Select an option:");
+        int optionNum = scan.nextInt();
+        if (optionNum == 1) {
+            System.out.println("Slope: UNDEFINED");
+        }else if (optionNum == 2) {
+            System.out.println("Distance: " + equation.distance());
+        }else if (optionNum == 3) {
+            System.out.println("Y-intercept: Not possible" );
+        }else if (optionNum == 4) {
+            System.out.println("Equation: x = " + equation.getX1());
+        }else if (optionNum == 5) {
+            System.out.println(equation.lineInfoUndefined());
+        }else if (optionNum == 6){
+            return 6;
+        }else{
+            System.out.println("Invalid option, try again;");
         }
         return 0;
     }
