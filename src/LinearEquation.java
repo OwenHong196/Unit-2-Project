@@ -44,6 +44,12 @@ public class LinearEquation {
         if ((y2 - y1) % (x2 - x1) == 0){
             slope = ((y2 - y1) / (x2 - x1)) + "";
         }
+        if (slope() == 1){
+            slope = "";
+        }
+        if (slope() == -1){
+            slope = "-";
+        }
         String equation = "y = " + slope + "x + " + yIntercept;
         if (yIntercept < 0){
             equation = equation.substring(0, equation.indexOf(" +")) + equation.substring(equation.indexOf("+") + 2);
